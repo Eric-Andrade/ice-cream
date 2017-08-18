@@ -1,0 +1,132 @@
+cd eric/apigraphql/javascript
+
+Error: startsWith undefined
+Solución: error de sintaxis en index.js
+
+Scalares{
+    Int
+    Float
+    String
+    ID
+    Boolean
+}
+////////////////////////
+query{
+  projects(owner: 1){
+    ...p
+  }
+  
+  employees(id: 1){
+    ...e
+  }
+  
+  }
+
+  fragment p on project {
+    _id
+    owner
+    nameProject
+    description
+    employee{
+      name
+      lastname
+      itecorposition
+    }
+  }
+
+  fragment e on employees {
+    id
+    username
+    password
+    name
+    lastname
+    age
+    gender
+    email
+    phone
+    dateregistered
+    itecorposition
+    status
+    birthdate
+    avatar
+    project{
+      owner
+      nameProject
+      description
+    }
+  }
+
+/addEmployee/
+mutation {
+  addEmployee(username: "Julio25", password: "1234", name: "Julio", lastname: "Almeida", age: 36, gender: "male", email: "julio@gmail.com", phone: "6181092321", itecorposition: "consultant", status: "active", avatar: "", idproject: 5) {
+    id
+    username
+    password
+    name
+    lastname
+    age
+    gender
+    email
+    phone
+    dateregistered
+    itecorposition
+    status
+    birthdate
+    avatar
+  }
+}
+/deleteEmployee/
+mutation {
+  deleteEmployee(id: 12) {
+    id
+  }
+}
+/updateEmployee/
+mutation {
+  updateEmployee(id: 13, username: "Julio13", password: "1234", name: "Julio", lastname: "Almeida", age: 36, gender: "male", email: "julio@gmail.com", phone: "6181092321", itecorposition: "consultant", status: "active", avatar: "", idproject: 1) {
+    id
+    username
+    password
+    name
+    lastname
+    age
+    gender
+    email
+    phone
+    dateregistered
+    itecorposition
+    status
+    birthdate
+    avatar
+  }
+}
+
+
+
+----GIT----
+git init // Inicia proyecto, se usa solo una vez.
+git status // Muestra lo que ya subimos o lo que nos falta por subir. 
+git add // Adiciona carpetas. 
+		-A // Añadir todo.
+git commit -m "mensaje" /// Asigna comentarios de lo que cambiamos. 
+git log /// Muestra todos los commit que hicimos. 
+git checkout [IdCommit] || master // Viajar al pasado de los commits || regresar al último commit.
+git reset --soft  // No borra código.
+                git reset --soft HEAD~1 // Borrar el último commit.
+ 		  --mixed // Avanzado. 
+ 		  --hard   // Borra todo.
+git branch // Muestra las ramas. 
+git branch nombre // Crea una rama. 
+git checkout [NombreRama]// Moverse en las ramas. 
+git branch -D [NombreRama]// Borra ramas. 
+git merge [NombreRama] // Adiciona toda la rama en la rama que estamos pocicionados.
+git commit --amend -m "mensaje" //Cambiar mensaje del último commit
+----GIT + GITHUB----
+git remote add origin [linkGithub.git] // Conectar con github.
+git remote remove origin // Eliminar repositorio remoto.
+git remote -v // Ver si hay conexion Git + GitHub.
+git push origin master // Enviar cambios a github.
+git pull // actualiza el repo local para sincronizar con el en linea
+Issues : Son una forma de continuar, mejorar o solucionar un error en nuestros repositorios (proyectos).
+Milestones : Son grupos de issues que aplican para un proyecto, característica o periodo de tiempo.
+Labels: son una manera de organizar distintos tipos de problemas.
