@@ -1,15 +1,17 @@
 import GraphQLDate from 'graphql-date'
-import OrderResolver from './orders.resolver'
+import OrdersResolver from './orders.resolver'
+import ClientsResolver from './clients.resolver'
 
 export default {
     Date: GraphQLDate,
     Query: {
-        getOrder: OrderResolver.getOrder,
-        getOrders: OrderResolver.getOrders
+        getOrder: OrdersResolver.getOrder,
+        getOrders: OrdersResolver.getOrders
     },
     Mutation:{
-        createOrder: OrderResolver.createOrder,
-        updateOrder: OrderResolver.updateOrder,
-        deleteOrder: OrderResolver.deleteOrder,
+        createOrder: OrdersResolver.createOrder,
+        updateOrder: OrdersResolver.updateOrder,
+        deleteOrder: OrdersResolver.deleteOrder,
+        signupClient: ClientsResolver.signupClient,
     }
 }

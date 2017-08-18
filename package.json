@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-backend": "cross-env NODE_ENV=dev nodemon --exec babel-node backend/javascript/index.js",
-    "prettier": "prettier --single-quote --print-width 80 --trailing-comma all --write '**/*.js'"
+    "prettier": "prettier --single-quote --print-width 80 --trailing-comma all --write 'backend/javascript/**/*.js'"
   },
   "author": "Eric Torres Andrade <erictorresandrade.1@gmail.com>",
   "license": "MIT",
