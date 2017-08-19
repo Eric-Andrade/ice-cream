@@ -27,8 +27,8 @@ Scalares{
     _id
     username
     password
+   }
   }
-
 
 
 

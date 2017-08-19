@@ -1,30 +1,13 @@
 /* eslint-disable no-console */
 import express from 'express';
-import bodyParser from 'body-parser';
-import { graphiqlExpress, graphqlExpress } from 'apollo-server-express'
-import { makeExecutableSchema } from 'graphql-tools'
 import { createServer } from 'http'
 import './config/databases';
-import  typeDefs from './graphql/schema'
-import resolvers from './graphql/resolvers/index'
 import constants from './config/constants'
 import mocks from './mocks'
+import middleware from './config/middleware'
 
 const app = express();
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers
-});
-
-app
-  .use(bodyParser.json())
-  .use('/graphiql', graphiqlExpress({
-    endpointURL: '/graphql'
-  }))
-  .use('/graphql', graphqlExpress({
-    schema
-  }
-  ))
+middleware(app);
 const graphqlServer = createServer(app)
 
 mocks().then(() =>{

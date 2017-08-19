@@ -6,7 +6,8 @@ export default {
     Date: GraphQLDate,
     Query: {
         getOrder: OrdersResolver.getOrder,
-        getOrders: OrdersResolver.getOrders
+        getOrders: OrdersResolver.getOrders,
+        me: ClientsResolver.me
     },
     Mutation:{
         createOrder: OrdersResolver.createOrder,

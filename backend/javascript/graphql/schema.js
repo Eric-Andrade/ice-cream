@@ -4,6 +4,9 @@ export default `
     type Status {
         message: String!
     }
+    type Auth {
+        token: String!
+    }
     type Client {
         _id: ID!
         username: String!
@@ -15,6 +18,19 @@ export default `
         createdAt: Date!
         updatedAt: Date!
     }
+
+    type Me {
+        _id: ID!
+        username: String!
+        firstname: String!
+        lastname: String
+        avatar: String
+        password: String
+        email: String!
+        createdAt: Date!
+        updatedAt: Date!
+    }
+
     type Order{
         _id: ID!
         text: String!
@@ -25,14 +41,15 @@ export default `
     type Query {
         getOrder(_id: ID!): Order
         getOrders: [Order]
+        me: Me
     }
 
     type Mutation {
         createOrder(text: String!): Order
         updateOrder(_id: ID!, text: String): Order 
         deleteOrder(_id: ID!): Status
-        signupClient(email: String!, fullName: String, password: String!, avatar: String, username: String): Client
-        loginClient(email: String!, password: String!): Client
+        signupClient(email: String!, fullName: String, password: String!, avatar: String, username: String): Auth
+        loginClient(email: String!, password: String!): Auth
     }
 
     schema {
