@@ -13,5 +13,6 @@ export default {
         updateOrder: OrdersResolver.updateOrder,
         deleteOrder: OrdersResolver.deleteOrder,
         signupClient: ClientsResolver.signupClient,
+        loginClient: ClientsResolver.loginClient,
     }
 }

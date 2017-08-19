@@ -32,6 +32,7 @@ export default `
         updateOrder(_id: ID!, text: String): Order 
         deleteOrder(_id: ID!): Status
         signupClient(email: String!, fullName: String, password: String!, avatar: String, username: String): Client
+        loginClient(email: String!, password: String!): Client
     }
 
     schema {
