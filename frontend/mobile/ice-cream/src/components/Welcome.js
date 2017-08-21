@@ -11,7 +11,7 @@ const Root = styled.View`
 `;
 
 const Text = styled.Text`
-  color: ${props => props.theme.PRIMARY};
+  color: ${props => props.theme.LIGHT_BROWN};
   fontSize: 18;
   textAlign: center;
 `;
@@ -19,7 +19,7 @@ const Text = styled.Text`
 export default function Welcome() {
   return (
     <Root>
-      <Text>Welcome, if you see this that mean everything work!!!</Text>
+      <Text>¡Welcome to iceCream!</Text>
     </Root>
   )
 }
