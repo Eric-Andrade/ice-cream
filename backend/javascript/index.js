@@ -15,7 +15,7 @@ const graphqlServer = createServer(app)
     if (err) {
       console.error(`~Error running APIGraphQL on port: ${constants.port}`);
     } else {
-      console.log(`APIGraphQL running on port: ${constants.port}`);
+      console.log(`APIGraphQL running on http://localhost:${constants.port}/graphiql`);
     }
   });
 // })
