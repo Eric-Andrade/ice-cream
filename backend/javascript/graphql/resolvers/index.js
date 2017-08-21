@@ -1,12 +1,18 @@
 import GraphQLDate from 'graphql-date'
 import OrdersResolver from './orders.resolver'
 import ClientsResolver from './clients.resolver'
+import Client from '../../models/clients'
 
 export default {
     Date: GraphQLDate,
+    Order:{
+        client:({client}) => Client.findById(client)
+
+    },
     Query: {
         getOrder: OrdersResolver.getOrder,
         getOrders: OrdersResolver.getOrders,
+        getClientOrders: OrdersResolver.getClientOrders,
         me: ClientsResolver.me
     },
     Mutation:{

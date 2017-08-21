@@ -4,13 +4,28 @@ import jwt from 'jsonwebtoken'
 import constants from '../config/constants'
 
 const ClientSchema = new Schema({
-    username:{ type: String, 
-        unique: true},
-    firstname: String,
+    username:{ 
+        type: String, 
+        required: true,
+        unique: true,
+        minlength:[3,'Username must be longer that 3 characters'],
+    },
+    firstname:{type:String,
+        required:true, 
+        maxlength:[15,'Firstname need to be longer']
+    },
     lastname: String,
     avatar: String,
-    password: String,
-    email: String
+    password:{
+        type:String,
+        required:'Password is required',
+        minlength:[3, 'Password must be longer that 3 characters'],
+    },
+    email:{
+        type:String,
+        required:'Email is required',
+        match:[/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,'The email is incorrect type of email']
+    },
 
 },{ timestamps: true });
 

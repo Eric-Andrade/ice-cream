@@ -34,6 +34,8 @@ export default `
     type Order{
         _id: ID!
         text: String!
+        client: Client!
+        favoriteCount: Int!
         createdAt: Date!
         updatedAt: Date!
     }
@@ -41,6 +43,7 @@ export default `
     type Query {
         getOrder(_id: ID!): Order
         getOrders: [Order]
+        getClientOrders: [Order]
         me: Me
     }
 

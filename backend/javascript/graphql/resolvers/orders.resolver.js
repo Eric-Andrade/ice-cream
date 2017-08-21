@@ -18,10 +18,18 @@ export default {
             throw error;
         }
     },
+    getClientOrders: async(_, args, {client}) => {
+        try{
+            await requireAuth(client)
+             return Order.find({client: client._id}).sort({ createdAt: -1 })
+         }catch(error){
+            throw error;
+        }
+    },
     createOrder: async (_, args, {client}) => {
         try{
             await requireAuth(client)
-            return Order.create(args)
+            return Order.create({...args,  client: client._id})
         }catch(error){
             throw error;
         }
@@ -29,7 +37,14 @@ export default {
     updateOrder: async(_, { _id, ... rest }, {client}) => {
         try{
             await requireAuth(client)
-            return Order.findByIdAndUpdate(_id, rest, {new: true})
+            const order = await Order.findOne({ _id, client: client._id})
+            if(!order){
+                throw new Error('Order not found')
+            }
+        Object.entries(rest).forEach(([key, value]) =>{
+            order[key] = value;
+        });
+        return order.save();
         }catch(error){
             throw error
         }
@@ -37,7 +52,11 @@ export default {
     deleteOrder: async(_, { _id }, {client}) => {
         try{
             await requireAuth(client)
-            await Order.findByIdAndRemove(_id)
+            const order = await Order.findOne({_id, client: client._id})
+            if(!order){
+                throw new Error('Order not found')
+            }
+            await order.remove();
             return{
                 message: 'Order deleted success!'
             }

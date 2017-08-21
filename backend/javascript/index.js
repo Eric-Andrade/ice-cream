@@ -10,7 +10,7 @@ const app = express();
 middleware(app);
 const graphqlServer = createServer(app)
 
-mocks().then(() =>{
+// mocks().then(() =>{
   graphqlServer.listen(constants.port, err => {
     if (err) {
       console.error(`~Error running APIGraphQL on port: ${constants.port}`);
@@ -18,5 +18,5 @@ mocks().then(() =>{
       console.log(`APIGraphQL running on port: ${constants.port}`);
     }
   });
-})
+// })
 
