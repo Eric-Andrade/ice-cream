@@ -1,14 +1,10 @@
 import React from 'react';
 import styled from 'styled-components/native';
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 import { fakeavatar } from '../../utils/constants'
 
 const avatarSize = 45;
 const avatarRadius = avatarSize / 2;
-const username = 'EricTorres';
-const firstname = 'Eric';
-const lastname = 'Torres Andrade';
-const createdAt = '1 day ago'
-const avatar = fakeavatar;
 
 const Root = styled.View`
     height: 50;
@@ -55,11 +51,11 @@ const MetaFullName = styled.Text`
     color: ${props => props.theme.SECONDARY}
 `;
 
-function OrderCardHeader(){
+function OrderCardHeader({username, firstname, lastname, avatar, createdAt}){
     return(
         <Root>
             <AvatarContainer>
-                <Avatar source={{uri: avatar}}/>
+                <Avatar source={{uri: avatar || fakeavatar}}/>
             </AvatarContainer>
             <MetaContainer>
                 <MetaTopContainer>
@@ -72,7 +68,7 @@ function OrderCardHeader(){
                 </MetaTopContainer>
                 <MetaBottomContainer>
                     <MetaText>
-                        {createdAt}
+                        {distanceInWordsToNow(createdAt)} ago
                     </MetaText>
                 </MetaBottomContainer>
             </MetaContainer>

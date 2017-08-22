@@ -12,7 +12,7 @@ export default {
     },
     getOrders: async(_, args, {client}) => {
         try{
-            await requireAuth(client)
+           // await requireAuth(client)
              return Order.find({}).sort({ createdAt: -1 })
          }catch(error){
             throw error;

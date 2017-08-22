@@ -25,18 +25,17 @@ const OrderContentText = styled.Text`
     paddingHorizontal: 10;
     color: #656e77
 `;
-const text = 'This is my first order'
 
-function OrderCard(){
+function OrderCard({text, client, createdAt, favoriteCount }){
     return(
         <Root>
-            <OrderCardHeader/>
+            <OrderCardHeader {...client} createdAt={createdAt}/>
             <OrderContentContainer>
                 <OrderContentText>
                     {text}
                 </OrderContentText>
             </OrderContentContainer>    
-            <OrderCardBottom/>
+            <OrderCardBottom  favoriteCount={favoriteCount}/>
         </Root>
     )
 }

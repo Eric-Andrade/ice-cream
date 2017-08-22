@@ -33,8 +33,10 @@ const TabNav = TabNavigator({
     Orders: {
         screen: OrdersScreen,
         navigationOptions:() =>({
+            headerTitle: 'Orders',
+            tabBarLabel: ' ',
             tabBarIcon: ({ tintColor, focused }) =>( 
-                <Icon name={focused ? 'ios-add-circle' : 'ios-radio-button-on-outline'} size={57} style={{color: tintColor, marginTop:5}}/>
+                <Icon name={focused ? 'ios-add-circle' : 'ios-radio-button-on-outline'} size={56} style={{color: tintColor, marginTop:18, flexDirection: 'row', justifyContent:'center'}}/>
             )
         })
     },
@@ -63,7 +65,7 @@ const TabNav = TabNavigator({
     initialRouteName: 'Orders',
     tabBarOptions:{
         showIcon: true,
-        showLabel: false,
+        showLabel: true,
         activeTintColor: '#e72b73',
         inactiveTintColor: '#333',
         style:{
@@ -79,7 +81,7 @@ const AppMainNav = StackNavigator({
     }
 },{
     cardStyle: {
-        backgroundColor: '#fcfcfc'
+        backgroundColor: '#f5f5f5'
     },
     navigationOptions: () => ({
         headerStyle:{

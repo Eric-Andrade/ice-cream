@@ -4,7 +4,6 @@ import { SimpleLineIcons, Entypo } from '@expo/vector-icons';
 import Touchable from '@appandflow/touchable';
 import { colors } from '../../utils/constants';
 
-const favoriteCount = 3;
 const isFavorite = false;
 const iconSize = 20;
 
@@ -27,7 +26,7 @@ const ButtonText = styled.Text`
     color: ${props => props.theme.LIGHT_GRAY}
 `;
 
-function OrderCardBottom(){
+function OrderCardBottom({favoriteCount}){
     return(
         <Root>
             <Button>
