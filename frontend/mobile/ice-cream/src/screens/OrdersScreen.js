@@ -4,8 +4,6 @@ import OrderCard from '../components/OrderCard/OrderCard'
 
 const Root = styled.View`
     flex:1;
-    backgroundColor: #f2f2f2;
-    paddingTop: 20;
     `;
 const List = styled.ScrollView``    
 

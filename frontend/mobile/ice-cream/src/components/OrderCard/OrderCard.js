@@ -12,7 +12,7 @@ const Root = styled.View`
     shadowOffset: 0px 2px;
     shadowRadius: 2;
     shadowOpacity: 0.1;
-    marginVertical: 5;
+    marginVertical: 2;
     `;
 const OrderContentContainer = styled.View`
     flex: 1;
@@ -23,7 +23,7 @@ const OrderContentText = styled.Text`
     textAlign: left;
     fontWeight: 500;
     paddingHorizontal: 10;
-    color: ${props => props.theme.SECONDARY}
+    color: #656e77
 `;
 const text = 'This is my first order'
 
