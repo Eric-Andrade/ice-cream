@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
-import { MaterialIcons }  from '@expo/vector-icons'
+import { Entypo }  from '@expo/vector-icons'
 import Touchable from '@appandflow/touchable';
-import { Platform, Keyboard } from 'react-native';
-import { colors } from '../utils/constants';
+import { Platform, Keyboard, AsyncStorage } from 'react-native';
+import { graphql, compose } from 'react-apollo';
+import { connect } from 'react-redux';
+import { colors, fakeavatar } from '../utils/constants';
+import signupMutation from '../graphql/mutations/signup'
+import Loading from '../components/Loading';
+import { login } from '../actions/client'
 
-const signup = 'Sign Up'
+
+const signup = 'Create account'
 
 const Root = styled(Touchable).attrs({
     feedback: 'none'
@@ -13,17 +19,13 @@ const Root = styled(Touchable).attrs({
     flex: 1;
     position: relative;
     justifyContent: center;
-    alignItems: center
-
+    alignItems: center;
 `;
 const Wrapper = styled.View`
     flex: 1;
     alignSelf: stretch;
     alignItems: center;
     justifyContent: center;
-`;
-const T = styled.Text`
-    color: ${props => props.theme.WHITE};
 `;
 const BackButton = styled(Touchable).attrs({
     feedback: 'opacity',
@@ -55,8 +57,9 @@ const ButtonConfirm = styled(Touchable).attrs({
     elevation: 2
 `;
 const ButtonConfirmText = styled.Text`
-    color: ${props => props.theme.LIGHT_BROWN};
-    fontWeight: 600
+    color: ${props => props.theme.LIGHT_BROWN400};
+    fontWeight: 500;
+    fontSize: 16;
 `;
 const InputWrapper = styled.View`
     height: 50;
@@ -76,59 +79,95 @@ const Input = styled.TextInput.attrs({
 `
 class SignupForm extends Component {
     state = { 
-        fullname: '',
+        fullName: '',
         email: '',
         password: '',
         username: '',
-
+        loading: false
      }
 
     _onOutSidePress = () => Keyboard.dismiss();
     _onChangeText = (text, type) => this.setState({[type]:text});
     _checkIfDisabled(){
-        const { fullname, email, username, password } = this.state;
-        if( !fullname || !email || !username || !password ){
+        const { fullName, email, username, password } = this.state;
+        if( !fullName || !email || !username || !password ){
             return true
         }
         return false
     }
+    _onSignupPress = async () => {
+        this.setState({ loading: true})
+        const { fullName, email, password, username} = this.state;
+        const avatar = fakeavatar;
+
+        try {
+            const { data } = await this.props.mutate({
+                variables: {
+                    fullName, 
+                    email, 
+                    password,
+                    username,
+                    avatar
+                }
+            });
+            await AsyncStorage.setItem('@icecream', data.signupClient.token);
+                this.setState({ loading: false });
+                return this.props.login();
+        } catch (error) {
+            throw error;
+        }
+    }
+
     render() {
+        if(this.state.loading){
+            return <Loading />
+        }
+
         return (
           <Root onPress={this._onOutSidePress}>
               <BackButton onPress={this.props.onBackPress}> 
-                  <MaterialIcons color={colors.WHITE} size={27} name="arrow-back" />
+                  <Entypo color={colors.WHITE} size={27} name="chevron-thin-left" />
               </BackButton>
               <Wrapper>
                 <InputWrapper>
                     <Input 
                     placeholder="Full Name"
+                    selectionColor={colors.CHOCOLATE}
+                    underlineColorAndroid={colors.PRIMARY}
                     autoCapitalize="words"
-                    onChangeText={text => this._onChangeText(text, 'fullname')}
+                    onChangeText={text => this._onChangeText(text, 'fullName')}
                     />
                 </InputWrapper>
                 <InputWrapper>
                     <Input 
                     placeholder="Email"
-                    Keyboard="email-adress"
+                    selectionColor={colors.CHOCOLATE}
+                    underlineColorAndroid={colors.PRIMARY}
+                    keyboardType="email-address"
+                    autoCapitalize="none"
                     onChangeText={text => this._onChangeText(text, 'email')}
                     />
                 </InputWrapper>
                 <InputWrapper>
                     <Input 
                     placeholder="Username"
+                    selectionColor={colors.CHOCOLATE}
+                    underlineColorAndroid={colors.PRIMARY}
                     autoCapitalize="none"
                     onChangeText={text => this._onChangeText(text, 'username')}
                     />
                 </InputWrapper>
                 <InputWrapper>
-                    <Input 
+                    <Input
                     placeholder="Password"
+                    selectionColor={colors.CHOCOLATE}
+                    underlineColorAndroid={colors.PRIMARY}
                     secureTextEntry
                     onChangeText={text => this._onChangeText(text, 'password')}
                     />
                 </InputWrapper>
               </Wrapper>
-              <ButtonConfirm  disabled={this._checkIfDisabled()}>
+              <ButtonConfirm onPress={this._onSignupPress} disabled={this._checkIfDisabled()}>
                 <ButtonConfirmText>
                     {signup}
                 </ButtonConfirmText>
@@ -138,4 +177,7 @@ class SignupForm extends Component {
     }
 }
 
-export default SignupForm;
+export default compose(
+        graphql(signupMutation),
+        connect(undefined, { login }),
+            )(SignupForm);
