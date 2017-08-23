@@ -3,38 +3,15 @@ import styled from 'styled-components/native';
 import Touchable from '@appandflow/touchable';
 import SignupForm from '../components/SignupForm'
 
-const alreadyaccount = 'Already have a account?'
-const login = 'Sign Up';
+const login = 'Log in'
+const signup = 'Sign Up';
 
 const Root = styled.View`
     flex: 1
     backgroundColor: ${props => props.theme.PRIMARY};
     position: relative;
 `;
-const ButtonSignupText = styled.Text`
-    color: ${props => props.theme.LIGHT_BROWN};
-    fontWeight: 500;
-    fontSize: 18;
-`;
-const ButtonSignup = styled(Touchable).attrs({
-    feedback: 'opacity'
-})`
-    height: 75;
-    width: 150;
-    backgroundColor: ${props => props.theme.WHITE};
-    justifyContent: center;
-    alignItems: center;
-    position: absolute;
-    top: 30%;
-    right: 0%;
-    borderTopLeftRadius: 20;
-    borderBottomLeftRadius: 20;
-    shadowOpacity: 0.3;
-    shadowRadius: 5;
-    shadowOffset: 0px 3px;
-    shadowColor: #000
-`;
-const BottomTextContainer = styled.View`
+const BottomContainer = styled.View`
     position: absolute;
     bottom: 0;
     left: 0;
@@ -48,15 +25,42 @@ const ButtonLogin = styled(Touchable).attrs({
     feedback: 'opacity',
     hitSlot: {top: 15, bottom: 15, right: 15, left: 15}
 })`
+    borderStyle: solid;
+    borderRadius: 10;
+    borderWidth: 1;
+    width: 70%;
+    height: 50;
+    borderColor: ${props => props.theme.LIGHT_BROWN400};
     justifyContent: center;
     alignItems: center;
 `;
-
 const ButtonLoginText = styled.Text`
-    color: ${props => props.theme.LIGHT_BROWN};
-    fontWeight: 400;
+    color: ${props => props.theme.LIGHT_BROWN400};
+    fontWeight: 500;
     fontSize: 16;
-`
+`;
+const ButtonSignup = styled(Touchable).attrs({
+    feedback: 'opacity'
+})`
+    position: absolute;
+    bottom: 15%;
+    width: 70%;
+    height: 50;
+    backgroundColor: ${props => props.theme.BROWN};
+    borderRadius: 10;
+    justifyContent: center;
+    alignItems: center;
+    shadowOpacity: 0.3;
+    shadowRadius: 5;
+    shadowOffset: 0px 3px;
+    shadowColor: #000;
+    elevation: 2
+`;
+const ButtonSignupText = styled.Text`
+    color: ${props => props.theme.LIGHT_BROWN200};
+    fontWeight: 500;
+    fontSize: 16;
+`;
 const initialState = { 
     showSignup: false,
     showLogin: false
@@ -78,16 +82,16 @@ class AuthenticationScreen extends Component {
         }
         return (
           <Root>
-              <ButtonSignup onPress={this._onShowSignupPress}>
-                <ButtonSignupText>{login}</ButtonSignupText>
-              </ButtonSignup> 
-              <BottomTextContainer>
+              <BottomContainer>
                 <ButtonLogin>
                     <ButtonLoginText>
-                        {alreadyaccount}
+                        {login}
                     </ButtonLoginText>
-                </ButtonLogin>
-              </BottomTextContainer>
+                </ButtonLogin>  
+                <ButtonSignup onPress={this._onShowSignupPress}>
+                    <ButtonSignupText>{signup}</ButtonSignupText>
+                </ButtonSignup> 
+              </BottomContainer>
           </Root>  
         );
     }

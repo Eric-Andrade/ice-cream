@@ -1,5 +1,5 @@
 import React from 'react';
-import { UIManager } from 'react-native';
+import { UIManager, AsyncStorage } from 'react-native';
 import { ApolloProvider } from 'react-apollo';
 import { ThemeProvider } from 'styled-components';
 
@@ -13,6 +13,16 @@ if (UIManager.setLayoutAnimationEnabledExperimental) {
 }
 
 export default class App extends React.Component {
+  _checkIfToken = async() =>{
+    try {
+        const token = await AsyncStorage.getItem('@icecream');
+        if(token !== null){
+          store.dispatch({type: 'LOGIN'})
+        }
+    } catch (error) {
+        throw error
+    }
+  }
   render() {
     return (
       <ApolloProvider store={store} client={client}>
