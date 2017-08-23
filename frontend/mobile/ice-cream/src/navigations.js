@@ -9,6 +9,7 @@ import MenuScreen from './screens/MenuScreen';
 import OrdersScreen from './screens/OrdersScreen';
 import ChatsScreen from './screens/ChatsScreen';
 import ConfigsScreen from './screens/ConfigsScreen';
+import AuthenticationScreen from './screens/AuthenticationScreen';
 
 const tabIcon = 27;
 const TabNav = TabNavigator({
@@ -36,7 +37,7 @@ const TabNav = TabNavigator({
             headerTitle: 'Orders',
             tabBarLabel: ' ',
             tabBarIcon: ({ tintColor, focused }) =>( 
-                <Icon name={focused ? 'ios-add-circle' : 'ios-radio-button-on-outline'} size={56} style={{color: tintColor, marginTop:18, flexDirection: 'row', justifyContent:'center'}}/>
+                <Icon name={focused ? 'ios-add-circle' : 'ios-radio-button-on-outline'} size={56} style={{color: tintColor, marginTop:20, flexDirection: 'row', justifyContent:'center'}}/>
             )
         })
     },
@@ -49,7 +50,7 @@ const TabNav = TabNavigator({
             )
         })
     },
-    Configs: {
+    Config: {
         screen: ConfigsScreen,
         navigationOptions:() =>({
             headerTitle: 'Configs',
@@ -61,12 +62,12 @@ const TabNav = TabNavigator({
 },{
     lazy: true,
     tabBarPosition: 'bottom',
-    swipeEnabled: true, 
+    swipeEnabled: false, 
     initialRouteName: 'Orders',
     tabBarOptions:{
         showIcon: true,
         showLabel: true,
-        activeTintColor: '#e72b73',
+        activeTintColor: colors.PRIMARY,
         inactiveTintColor: '#333',
         style:{
             backgroundColor: colors.WHITE,
@@ -101,12 +102,16 @@ class AppNavigator extends Component {
         dispatch: this.props.dispatch,
         state: this.props.nav
         })
+        if (!this.props.clients.isAuthenticated) {
+            return <AuthenticationScreen/>
+        }
         return <AppMainNav navigation={nav}/>
     }
 }
 
 export default connect(state =>({
-    nav: state.nav
+    nav: state.nav,
+    clients: state.clients
 }))(AppNavigator);
 
 export const router = AppMainNav.router;

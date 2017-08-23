@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { SimpleLineIcons, Entypo } from '@expo/vector-icons';
+import { SimpleLineIcons, Entypo, Ionicons } from '@expo/vector-icons';
 import Touchable from '@appandflow/touchable';
 import { colors } from '../../utils/constants';
 
@@ -42,7 +42,7 @@ function OrderCardBottom({favoriteCount}){
                 </ButtonText>    
             </Button>    
             <Button>
-                <Entypo name="heart" size={iconSize} color={isFavorite ? 'red' : colors.LIGHT_GRAY}/>
+                <Ionicons name="ios-heart" size={iconSize} color={isFavorite ? 'red' : colors.LIGHT_GRAY}/>
                 <ButtonText>
                     {favoriteCount}
                 </ButtonText>    
