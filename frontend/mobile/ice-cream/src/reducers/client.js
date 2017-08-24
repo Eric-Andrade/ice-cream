@@ -9,6 +9,13 @@ export default (state = initialState, action) => {
                 ...state,
                 isAuthenticated: true
             }
+        case 'GETME':
+            return{
+                ...state,
+                info: action.info
+            }
+        case 'LOGOUT':
+            return initialState;       
         default:
             return state;
     }

@@ -10,6 +10,7 @@ import OrdersScreen from './screens/OrdersScreen';
 import ChatsScreen from './screens/ChatsScreen';
 import ConfigsScreen from './screens/ConfigsScreen';
 import AuthenticationScreen from './screens/AuthenticationScreen';
+import HeaderAvatar from './components/HeaderAvatar';
 
 const tabIcon = 27;
 const TabNav = TabNavigator({
@@ -78,7 +79,10 @@ const TabNav = TabNavigator({
 })
 const AppMainNav = StackNavigator({
     Home: {
-        screen: TabNav
+        screen: TabNav,
+        navigationOptions: () => ({
+            headerLeft: <HeaderAvatar />
+        })
     }
 },{
     cardStyle: {

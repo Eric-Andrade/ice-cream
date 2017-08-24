@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { graphql } from 'react-apollo';
+import { graphql, compose, withApollo } from 'react-apollo';
 import styled from 'styled-components/native';
 import { ActivityIndicator, FlatList } from 'react-native';
+import { connect } from 'react-redux';
+
 import OrderCard from '../components/OrderCard/OrderCard';
 import getOrdersQuery from '../graphql/queries/getOrders'
+import meQuery from '../graphql/queries/me';
+import { getMe }from '../actions/client';
 
 const Root = styled.View`
     flex:1;
@@ -11,8 +15,14 @@ const Root = styled.View`
 
 
 class OrdersScreen extends Component{
-    state = {
+    
+    componentDidMount(){
+        this._getMe();
+    }
 
+    _getMe = async () =>{
+        const { data: { me } } = await this.props.client.query({query: meQuery});
+        this.props.getMe(me)
     }
     _renderItem = ({item}) => <OrderCard {...item} />
 
@@ -40,4 +50,7 @@ class OrdersScreen extends Component{
     }
 }
 
-export default graphql(getOrdersQuery)(OrdersScreen);
+export default withApollo(compose(
+        connect(undefined, { getMe }),
+        graphql(getOrdersQuery)
+        )(OrdersScreen));

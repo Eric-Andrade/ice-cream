@@ -9,10 +9,6 @@ import { colors, fakeavatar } from '../utils/constants';
 import signupMutation from '../graphql/mutations/signup'
 import Loading from '../components/Loading';
 import { login } from '../actions/client'
-<<<<<<< HEAD
-
-=======
->>>>>>> 0185f8c669e266e7927248814fe2e323c4ec709f
 
 
 const signup = 'Create account'
@@ -62,12 +58,8 @@ const ButtonConfirm = styled(Touchable).attrs({
 `;
 const ButtonConfirmText = styled.Text`
     color: ${props => props.theme.LIGHT_BROWN400};
-<<<<<<< HEAD
-    fontWeight: 600
-=======
     fontWeight: 500;
     fontSize: 16;
->>>>>>> 0185f8c669e266e7927248814fe2e323c4ec709f
 `;
 const InputWrapper = styled.View`
     height: 50;
@@ -149,11 +141,8 @@ class SignupForm extends Component {
                 <InputWrapper>
                     <Input 
                     placeholder="Email"
-<<<<<<< HEAD
-=======
                     selectionColor={colors.CHOCOLATE}
                     underlineColorAndroid={colors.PRIMARY}
->>>>>>> 0185f8c669e266e7927248814fe2e323c4ec709f
                     keyboardType="email-address"
                     autoCapitalize="none"
                     onChangeText={text => this._onChangeText(text, 'email')}

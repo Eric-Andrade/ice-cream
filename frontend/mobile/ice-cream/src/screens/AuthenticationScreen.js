@@ -28,10 +28,10 @@ const Logo = styled.Image`
 `;
 const Slogan = styled.Text`
     color: ${props => props.theme.WHITE};
-    width: 180;
+    width: 160;
     marginTop: 10;
     textAlign: center;
-    fontSize: 15;
+    fontSize: 12;
     fontStyle: italic;
     fontWeight: 600;
 `;
