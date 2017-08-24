@@ -5,19 +5,39 @@ import SignupForm from '../components/SignupForm'
 
 const login = 'Log in'
 const signup = 'Sign Up';
+const slogan = '❝ Change the World, One Scoop at a time... ❞';
+const icecreamLogoSize = 120;
+const avatarRadius = icecreamLogoSize / 2;
 
 const Root = styled.View`
-    flex: 1
+    flex: 1;
     backgroundColor: ${props => props.theme.PRIMARY};
-    position: relative;
+`;
+const InfoContainer = styled.View`
+    flex: 2;
+    backgroundColor: ${props => props.theme.PRIMARY};
+    justifyContent: center;
+    alignSelf: stretch;
+    alignItems: center;
+`;
+const Logo = styled.Image`
+    height: ${icecreamLogoSize};
+    width: ${icecreamLogoSize};
+    borderRadius: ${avatarRadius};
+    backgroundColor: ${props => props.theme.WHITE};
+`;
+const Slogan = styled.Text`
+    color: ${props => props.theme.WHITE};
+    width: 180;
+    marginTop: 10;
+    textAlign: center;
+    fontSize: 15;
+    fontStyle: italic;
+    fontWeight: 600;
 `;
 const BottomContainer = styled.View`
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 275;
-    backgroundColor: #fff;
+    flex: 1;
+    backgroundColor: ${props => props.theme.WHITE};
     justifyContent: center;
     alignItems: center;
 `;
@@ -46,7 +66,7 @@ const ButtonSignup = styled(Touchable).attrs({
     bottom: 15%;
     width: 70%;
     height: 50;
-    backgroundColor: ${props => props.theme.BROWN};
+    backgroundColor: ${props => props.theme.CHOCOLATE};
     borderRadius: 10;
     justifyContent: center;
     alignItems: center;
@@ -57,7 +77,7 @@ const ButtonSignup = styled(Touchable).attrs({
     elevation: 2
 `;
 const ButtonSignupText = styled.Text`
-    color: ${props => props.theme.LIGHT_BROWN200};
+    color: ${props => props.theme.LIGHT_BROWN};
     fontWeight: 500;
     fontSize: 16;
 `;
@@ -82,7 +102,13 @@ class AuthenticationScreen extends Component {
         }
         return (
           <Root>
-              <BottomContainer>
+            <InfoContainer>
+                <Logo source={require('../../assets/icons/app-icon.png')}/>
+                <Slogan>
+                    {slogan}
+                </Slogan>
+            </InfoContainer>
+            <BottomContainer>
                 <ButtonLogin>
                     <ButtonLoginText>
                         {login}
@@ -91,8 +117,8 @@ class AuthenticationScreen extends Component {
                 <ButtonSignup onPress={this._onShowSignupPress}>
                     <ButtonSignupText>{signup}</ButtonSignupText>
                 </ButtonSignup> 
-              </BottomContainer>
-          </Root>  
+            </BottomContainer>
+            </Root>  
         );
     }
 }

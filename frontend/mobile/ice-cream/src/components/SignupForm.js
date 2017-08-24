@@ -9,9 +9,13 @@ import { colors, fakeavatar } from '../utils/constants';
 import signupMutation from '../graphql/mutations/signup'
 import Loading from '../components/Loading';
 import { login } from '../actions/client'
+<<<<<<< HEAD
+
+=======
+>>>>>>> 0185f8c669e266e7927248814fe2e323c4ec709f
 
 
-const signup = 'Sign Up'
+const signup = 'Create account'
 
 const Root = styled(Touchable).attrs({
     feedback: 'none'
@@ -19,17 +23,13 @@ const Root = styled(Touchable).attrs({
     flex: 1;
     position: relative;
     justifyContent: center;
-    alignItems: center
-
+    alignItems: center;
 `;
 const Wrapper = styled.View`
     flex: 1;
     alignSelf: stretch;
     alignItems: center;
     justifyContent: center;
-`;
-const T = styled.Text`
-    color: ${props => props.theme.WHITE};
 `;
 const BackButton = styled(Touchable).attrs({
     feedback: 'opacity',
@@ -62,7 +62,12 @@ const ButtonConfirm = styled(Touchable).attrs({
 `;
 const ButtonConfirmText = styled.Text`
     color: ${props => props.theme.LIGHT_BROWN400};
+<<<<<<< HEAD
     fontWeight: 600
+=======
+    fontWeight: 500;
+    fontSize: 16;
+>>>>>>> 0185f8c669e266e7927248814fe2e323c4ec709f
 `;
 const InputWrapper = styled.View`
     height: 50;
@@ -135,6 +140,8 @@ class SignupForm extends Component {
                 <InputWrapper>
                     <Input 
                     placeholder="Full Name"
+                    selectionColor={colors.CHOCOLATE}
+                    underlineColorAndroid={colors.PRIMARY}
                     autoCapitalize="words"
                     onChangeText={text => this._onChangeText(text, 'fullName')}
                     />
@@ -142,6 +149,11 @@ class SignupForm extends Component {
                 <InputWrapper>
                     <Input 
                     placeholder="Email"
+<<<<<<< HEAD
+=======
+                    selectionColor={colors.CHOCOLATE}
+                    underlineColorAndroid={colors.PRIMARY}
+>>>>>>> 0185f8c669e266e7927248814fe2e323c4ec709f
                     keyboardType="email-address"
                     autoCapitalize="none"
                     onChangeText={text => this._onChangeText(text, 'email')}
@@ -150,13 +162,17 @@ class SignupForm extends Component {
                 <InputWrapper>
                     <Input 
                     placeholder="Username"
+                    selectionColor={colors.CHOCOLATE}
+                    underlineColorAndroid={colors.PRIMARY}
                     autoCapitalize="none"
                     onChangeText={text => this._onChangeText(text, 'username')}
                     />
                 </InputWrapper>
                 <InputWrapper>
-                    <Input 
+                    <Input
                     placeholder="Password"
+                    selectionColor={colors.CHOCOLATE}
+                    underlineColorAndroid={colors.PRIMARY}
                     secureTextEntry
                     onChangeText={text => this._onChangeText(text, 'password')}
                     />
