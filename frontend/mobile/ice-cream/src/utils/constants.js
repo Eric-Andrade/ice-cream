@@ -1,5 +1,6 @@
 export const colors = {
   PRIMARY: '#E72B73',
+  PRIMARYRGBA: 'rgba(231, 43, 115, 0.85)',
   PRIMARY_LIGHT: '#f54f8e',
   SECONDARY: '#444B52',
   SECONDARY_LIGHT: '#444B52',

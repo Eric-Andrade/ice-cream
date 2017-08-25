@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
 import Touchable from '@appandflow/touchable';
-import SignupForm from '../components/SignupForm'
+import { Font } from 'expo';
+import SignupForm from '../components/SignupForm';
 
 const login = 'Log in'
 const signup = 'Sign Up';
-const slogan = '❝ Change the World, One Scoop at a time... ❞';
+const slogan = '❝Change the World, One Scoop at a time...❞';
+const NameCompany = 'iceCream';
 const icecreamLogoSize = 120;
 const avatarRadius = icecreamLogoSize / 2;
 
@@ -13,13 +15,22 @@ const Root = styled.View`
     flex: 1;
     backgroundColor: ${props => props.theme.PRIMARY};
 `;
+const BackImage = styled.Image`
+    flex: 2;
+    resizeMode: cover;
+`;
 const InfoContainer = styled.View`
     flex: 2;
-    backgroundColor: ${props => props.theme.PRIMARY};
+    backgroundColor: ${props => props.theme.PRIMARYRGBA};
     justifyContent: center;
     alignSelf: stretch;
     alignItems: center;
 `;
+const CompanyName = styled.Text`
+    color: ${props => props.theme.WHITE};
+    fontWeight: bold;
+    marginBottom: 5
+`
 const Logo = styled.Image`
     height: ${icecreamLogoSize};
     width: ${icecreamLogoSize};
@@ -28,12 +39,12 @@ const Logo = styled.Image`
 `;
 const Slogan = styled.Text`
     color: ${props => props.theme.WHITE};
-    width: 160;
-    marginTop: 10;
+    width: 180;
     textAlign: center;
-    fontSize: 12;
+    fontSize: 14;
     fontStyle: italic;
-    fontWeight: 600;
+    fontWeight: 400;
+    marginTop: 15
 `;
 const BottomContainer = styled.View`
     flex: 1;
@@ -77,7 +88,7 @@ const ButtonSignup = styled(Touchable).attrs({
     elevation: 2
 `;
 const ButtonSignupText = styled.Text`
-    color: ${props => props.theme.LIGHT_BROWN};
+    color: ${props => props.theme.LIGHT_BROWN200};
     fontWeight: 500;
     fontSize: 16;
 `;
@@ -87,7 +98,21 @@ const initialState = {
  }
 
 class AuthenticationScreen extends Component {
-    state = initialState
+    state = {
+        initialState,
+        fontLoaded: false,
+    };;
+    
+    async componentDidMount() {
+        await Font.loadAsync({
+            'Sacramento': require('../../assets/fonts/Sacramento/Sacramento-Regular.ttf'),
+            'JosefinSans_Regular': require('../../assets/fonts/Josefin_Sans/JosefinSans-Regular.ttf'),
+            'Lobster': require('../../assets/fonts/Lobster/Lobster-Regular.ttf'),
+            'Roboto': require('../../assets/fonts/Roboto/Roboto-Regular.ttf'),
+            'Tangerine': require('../../assets/fonts/Tangerine/Tangerine-Regular.ttf'),
+        });
+        this.setState({ fontLoaded: true });
+    }
 
     _onShowSignupPress = () => this.setState({ showSignup: true });
     _onBackPress = () => this.setState({ ...initialState });
@@ -101,24 +126,35 @@ class AuthenticationScreen extends Component {
             )
         }
         return (
-          <Root>
-            <InfoContainer>
-                <Logo source={require('../../assets/icons/app-icon.png')}/>
-                <Slogan>
-                    {slogan}
-                </Slogan>
-            </InfoContainer>
-            <BottomContainer>
-                <ButtonLogin>
-                    <ButtonLoginText>
-                        {login}
-                    </ButtonLoginText>
-                </ButtonLogin>  
-                <ButtonSignup onPress={this._onShowSignupPress}>
-                    <ButtonSignupText>{signup}</ButtonSignupText>
-                </ButtonSignup> 
-            </BottomContainer>
-            </Root>  
+              <Root>
+                <BackImage style={{width: null, height: null}}
+                    source={require('../../assets/10.jpg')}>   
+                    <InfoContainer>
+                        {
+                            this.state.fontLoaded ? (
+                            <CompanyName style={{fontFamily: 'Sacramento', fontSize: 37}}>
+                                {NameCompany}
+                                <CompanyName style={{fontFamily: 'Sacramento', fontSize: 37}}>    
+                                    Uniporn
+                                </CompanyName>
+                            </CompanyName>
+                            ) : null
+                        }
+                        <Logo source={require('../../assets/icons/app-icon.png')}/>
+                        <Slogan style={{letterSpacing: 1}}>
+                            {slogan}
+                        </Slogan>
+                    </InfoContainer>
+                </BackImage>
+                <BottomContainer>
+                    <ButtonLogin>
+                        <ButtonLoginText>{login}</ButtonLoginText>
+                    </ButtonLogin>
+                    <ButtonSignup onPress={this._onShowSignupPress}>
+                        <ButtonSignupText>{signup}</ButtonSignupText>
+                    </ButtonSignup> 
+                </BottomContainer>
+            </Root>
         );
     }
 }

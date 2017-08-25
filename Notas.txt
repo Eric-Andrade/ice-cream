@@ -1,5 +1,10 @@
-cd eric/apigraphql/javascript
-
+Run services
+  run APIGraphQL: backend -> javascript: yarn start
+  run App: frontend -> mobile -> ice-cream: exp start
+    run emulator ios/android: frontend -> mobile -> ice-cream: exp ios/android
+    run rnDebugger: yarn debug
+   
+      
 Error: startsWith undefined
 Solución: error de sintaxis en index.js
 
