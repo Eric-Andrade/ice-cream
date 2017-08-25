@@ -7,7 +7,7 @@ import SignupForm from '../components/SignupForm';
 const login = 'Log in'
 const signup = 'Sign Up';
 const slogan = '❝Change the World, One Scoop at a time...❞';
-const NameCompany = 'iceCream';
+const NameCompany = 'iceCream Unicorn';
 const icecreamLogoSize = 120;
 const avatarRadius = icecreamLogoSize / 2;
 
@@ -134,9 +134,6 @@ class AuthenticationScreen extends Component {
                             this.state.fontLoaded ? (
                             <CompanyName style={{fontFamily: 'Sacramento', fontSize: 37}}>
                                 {NameCompany}
-                                <CompanyName style={{fontFamily: 'Sacramento', fontSize: 37}}>    
-                                    Uniporn
-                                </CompanyName>
                             </CompanyName>
                             ) : null
                         }

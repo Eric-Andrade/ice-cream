@@ -132,6 +132,8 @@ class SignupForm extends Component {
                 <InputWrapper>
                     <Input 
                     placeholder="Full Name"
+                    autoFocus
+                    returnKeyType={"next"}
                     selectionColor={colors.CHOCOLATE}
                     underlineColorAndroid={colors.PRIMARY}
                     autoCapitalize="words"

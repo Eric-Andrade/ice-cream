@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import styled from 'styled-components/native';
-import Touchable from '@appandflow/touchable';
 import { connect } from 'react-redux';
 import { connectActionSheet } from '@expo/react-native-action-sheet';
 import { withApollo } from 'react-apollo';
 import { fakeavatar, colors } from '../utils/constants'
 import Loading from './Loading';
 import { logout } from '../actions/client' 
+import ButtonHeader from './ButtonHeader';
 
 const avatarSize = 30;
 const avatarRadius = avatarSize / 2;
@@ -14,14 +14,6 @@ const Avatar = styled.Image`
     height: ${avatarSize};
     width: ${avatarSize};
     borderRadius: ${avatarRadius};
-`;
-const Button = styled(Touchable).attrs({
-    feedback: 'opacity',
-    hitSlot: {top: 25, bottom: 25, right: 25, left: 25}
-})`
-    marginLeft: 15;
-    justifyContent: center;
-    alignItems: center;
 `;
 
 class HeaderAvatar extends Component {
@@ -42,16 +34,16 @@ class HeaderAvatar extends Component {
     render() {
         if(!this.props.info){
             return (
-                <Button disabled>
+                <ButtonHeader side="left" disabled>
                     <Loading size="small" color={colors.PRIMARY}/>
-                </Button>
+                </ButtonHeader>
             )
         }
-        return (
-            <Button onPress={this._onOpenActionSheet}>
-                <Avatar source={{uri: this.props.info.avatar }}/>
-            </Button>
-        );
+            return (
+                <ButtonHeader side="left" onPress={this._onOpenActionSheet}>
+                    <Avatar source={{uri: this.props.info.avatar }}/>
+                </ButtonHeader>
+            );
     }
 }
 

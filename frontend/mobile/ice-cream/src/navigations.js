@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { addNavigationHelpers, StackNavigator, TabNavigator } from 'react-navigation';
 import { connect } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { EvilIcons } from '@expo/vector-icons';
+import { Keyboard } from 'react-native';
 
 import { colors } from './utils/constants';
 import AnalyticsScreen from './screens/AnalyticsScreen';
@@ -10,9 +12,12 @@ import OrdersScreen from './screens/OrdersScreen';
 import ChatsScreen from './screens/ChatsScreen';
 import ConfigsScreen from './screens/ConfigsScreen';
 import AuthenticationScreen from './screens/AuthenticationScreen';
+import NewOrderScreen from './screens/NewOrderScreen';
 import HeaderAvatar from './components/HeaderAvatar';
+import ButtonHeader from './components/ButtonHeader';
 
 const tabIcon = 27;
+
 const TabNav = TabNavigator({
     Analytics: {
         screen: AnalyticsScreen,
@@ -77,12 +82,39 @@ const TabNav = TabNavigator({
         }
     }
 })
+
+const NewOrderModal = StackNavigator({
+    NewOrder: {
+        screen: NewOrderScreen,
+        navigationOptions: ({ navigation }) => ({
+            headerLeft: <HeaderAvatar/>,
+            headerRight: (
+                <ButtonHeader side="right" onPress={() => {
+                    Keyboard.dismiss();
+                    navigation.goBack(null)
+                    }}>
+                    <EvilIcons name="close" size={30} color={colors.PRIMARY}/>
+                </ButtonHeader>
+            )
+        })
+    }
+},
+    { headerMode: 'none'}
+);
 const AppMainNav = StackNavigator({
     Home: {
         screen: TabNav,
-        navigationOptions: () => ({
-            headerLeft: <HeaderAvatar />
+        navigationOptions: ({navigation}) => ({
+            headerLeft: <HeaderAvatar />,
+            headerRight: (
+                <ButtonHeader side="right" onPress={() => navigation.navigate('NewOrder')}>
+                    <Icon name='md-add' size={30} color={colors.PRIMARY100}/>
+                </ButtonHeader>
+            )
         })
+    },
+    NewOrder:{
+        screen: NewOrderModal
     }
 },{
     cardStyle: {
