@@ -19,7 +19,12 @@ const Root = styled(Touchable).attrs({
     flex: 1;
     position: relative;
     justifyContent: center;
-    alignItems: center;
+    backgroundColor: ${props => props.theme.LIGHT_GRAY100};
+`;
+const BackImage = styled.Image`
+    flex: 1;
+    resizeMode: cover;
+    zIndex: 1;
 `;
 const Wrapper = styled.View`
     flex: 1;
@@ -36,17 +41,16 @@ const BackButton = styled(Touchable).attrs({
     position: absolute;
     top: 5%;
     left: 5%;
-    zIndex: 1;
+    zIndex: 2;
 `;
 const ButtonConfirm = styled(Touchable).attrs({
     feedback: 'opacity',
     hitSlot: {top: 15, bottom: 15, right: 15, left: 15}
 })`
-    position: absolute;
-    bottom: 15%;
+    marginTop: 15;
     width: 70%;
     height: 50;
-    backgroundColor: ${props => props.theme.WHITE};
+    backgroundColor: ${props => props.theme.GRAY};
     borderRadius: 10;
     justifyContent: center;
     alignItems: center;
@@ -57,25 +61,26 @@ const ButtonConfirm = styled(Touchable).attrs({
     elevation: 2
 `;
 const ButtonConfirmText = styled.Text`
-    color: ${props => props.theme.LIGHT_BROWN400};
+    color: ${props => props.theme.LIGHT_GRAY200};
     fontWeight: 500;
     fontSize: 16;
 `;
 const InputWrapper = styled.View`
-    height: 50;
-    width: 80%;
+    height: 45;
+    width: 70%;
     borderBottomWidth: 1;
-    borderBottomColor: ${props => props.theme.WHITE};
-    marginVertical: 5;
+    borderBottomColor: ${props => props.theme.LIGHT_GRAY200};
     justifyContent: flex-end;
 `;
 const Input = styled.TextInput.attrs({
-    placeholderTextColor: colors.WHITE,
-    selectionColor: Platform.OS === 'ios' ? colors.WHITE : undefined,
+    placeholderTextColor: colors.LIGHT_GRAY200,
+    selectionColor: Platform.OS === 'ios' ? colors.GRAY : undefined,
     autoCorrect: false,
 })`
+    alignSelf: center;
     height: 30;
-    color: ${props => props.theme.WHITE};
+    width: 100%;
+    color: ${props => props.theme.LIGHT_GRAY200};
 `
 class SignupForm extends Component {
     state = { 
@@ -126,54 +131,52 @@ class SignupForm extends Component {
         return (
           <Root onPress={this._onOutSidePress}>
               <BackButton onPress={this.props.onBackPress}> 
-                  <Entypo color={colors.WHITE} size={27} name="chevron-thin-left" />
+                <Entypo color={colors.LIGHT_GRAY200} size={27} name="chevron-thin-left" />
               </BackButton>
-              <Wrapper>
-                <InputWrapper>
-                    <Input 
-                    placeholder="Full Name"
-                    autoFocus
-                    returnKeyType={"next"}
-                    selectionColor={colors.CHOCOLATE}
-                    underlineColorAndroid={colors.PRIMARY}
-                    autoCapitalize="words"
-                    onChangeText={text => this._onChangeText(text, 'fullName')}
-                    />
-                </InputWrapper>
-                <InputWrapper>
-                    <Input 
-                    placeholder="Email"
-                    selectionColor={colors.CHOCOLATE}
-                    underlineColorAndroid={colors.PRIMARY}
-                    keyboardType="email-address"
-                    autoCapitalize="none"
-                    onChangeText={text => this._onChangeText(text, 'email')}
-                    />
-                </InputWrapper>
-                <InputWrapper>
-                    <Input 
-                    placeholder="Username"
-                    selectionColor={colors.CHOCOLATE}
-                    underlineColorAndroid={colors.PRIMARY}
-                    autoCapitalize="none"
-                    onChangeText={text => this._onChangeText(text, 'username')}
-                    />
-                </InputWrapper>
-                <InputWrapper>
-                    <Input
-                    placeholder="Password"
-                    selectionColor={colors.CHOCOLATE}
-                    underlineColorAndroid={colors.PRIMARY}
-                    secureTextEntry
-                    onChangeText={text => this._onChangeText(text, 'password')}
-                    />
-                </InputWrapper>
-              </Wrapper>
-              <ButtonConfirm onPress={this._onSignupPress} disabled={this._checkIfDisabled()}>
-                <ButtonConfirmText>
-                    {signup}
-                </ButtonConfirmText>
-              </ButtonConfirm>
+              <BackImage style={{width: null, height: null}}
+                    source={require('../../assets/background.png')}>   
+                <Wrapper>
+                    <InputWrapper>
+                        <Input 
+                        placeholder="Full Name"
+                        returnKeyType={"next"}
+                        underlineColorAndroid={colors.PRIMARY}
+                        autoCapitalize="words"
+                        onChangeText={text => this._onChangeText(text, 'fullName')}
+                        />
+                    </InputWrapper>
+                    <InputWrapper>
+                        <Input 
+                        placeholder="Email"
+                        underlineColorAndroid={colors.PRIMARY}
+                        keyboardType="email-address"
+                        autoCapitalize="none"
+                        onChangeText={text => this._onChangeText(text, 'email')}
+                        />
+                    </InputWrapper>
+                    <InputWrapper>
+                        <Input 
+                        placeholder="Username"
+                        underlineColorAndroid={colors.PRIMARY}
+                        autoCapitalize="none"
+                        onChangeText={text => this._onChangeText(text, 'username')}
+                        />
+                    </InputWrapper>
+                    <InputWrapper>
+                        <Input
+                        placeholder="Password"
+                        underlineColorAndroid={colors.PRIMARY}
+                        secureTextEntry
+                        onChangeText={text => this._onChangeText(text, 'password')}
+                        />
+                    </InputWrapper>
+                    <ButtonConfirm onPress={this._onSignupPress} disabled={this._checkIfDisabled()}>
+                        <ButtonConfirmText>
+                            {signup}
+                        </ButtonConfirmText>
+                    </ButtonConfirm>
+                </Wrapper>
+            </BackImage>    
           </Root>  
         );
     }
