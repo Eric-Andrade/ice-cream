@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Platform } from 'react-native';
+import { Platform, Keyboard } from 'react-native';
 import styled from 'styled-components/native';
 import Touchable from '@appandflow/touchable';
-import { colors } from '../utils/constants';
+import { graphql, compose } from 'react-apollo';
+import { connect } from 'react-redux';
 
+import { colors } from '../utils/constants';
+import createOrderMutation from '../graphql/mutations/createOrder';
+import getOrdersQuery from '../graphql/queries/getOrders'
 //Style
     const Root = styled.View`
         flex: 1;
@@ -61,8 +65,44 @@ class NewOrderScreen extends Component {
      }
 
      _onChangeText = text => this.setState({text}) 
+     _onCreateOrderPress = async () =>{
+         const { clients } = this.props;
+        await this.props.mutate({
+            variables: {
+                text: this.state.text
+            },
+            optimisticResponse: {
+                __typename: 'Mutation',
+                createOrder: {
+                    __typename: 'Order',
+                    _id: Math.round(Math.random() * -1000000),
+                    text: this.state.text,
+                    favoriteCount: 0,
+                    createdAt: new Date(),
+                    client: {
+                        __typename: 'Client',
+                        username: clients.username,
+                        firstname: clients.firstname,
+                        lastname: clients.lastname,
+                        avatar: clients.avatar
+                    }
+                }
+            },
+            update: (store, {data: { createOrder }}) =>{
+                const data = store.readQuery({query: getOrdersQuery});
+                if(!data.getOrders.find(o => o._id === createOrder._id)){
+                    store.writeQuery({query:getOrdersQuery, data: {getOrders: [{...createOrder}, ...data.getOrders]}})
+                }
+            }
+        });
+        Keyboard.dismiss();
+        this.props.navigation.goBack(null);
+     }
      get _textLenght(){
          return 140 - this.state.text.length;
+     }
+     get _buttonDisabled(){
+         return this.state.text.length < 5;
      }
     render() {
         return (
@@ -72,7 +112,7 @@ class NewOrderScreen extends Component {
                 <TextLenght>
                     {this._textLenght}              
                 </TextLenght>
-                <CreateOrderButton>
+                <CreateOrderButton onPress={this._onCreateOrderPress} disabled={this._buttonDisabled}>
                     <CreateOrderText>To order</CreateOrderText>
                 </CreateOrderButton>
               </Wrapper>
@@ -81,4 +121,7 @@ class NewOrderScreen extends Component {
     }
 }
 
-export default NewOrderScreen;
+export default compose(
+                graphql(createOrderMutation),
+                connect(state => ({clients: state.clients.info}))
+                )(NewOrderScreen);
