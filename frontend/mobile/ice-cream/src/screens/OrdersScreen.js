@@ -8,6 +8,7 @@ import OrderCard from '../components/OrderCard/OrderCard';
 import getOrdersQuery from '../graphql/queries/getOrders'
 import meQuery from '../graphql/queries/me';
 import { getMe }from '../actions/client';
+import orderAddedSubscription from '../graphql/subscriptions/orderAdded';
 
 const Root = styled.View`
     flex:1;
@@ -15,7 +16,24 @@ const Root = styled.View`
 
 
 class OrdersScreen extends Component{
-    
+    componentWillMount(){
+        this.props.data.subscribeToMore({
+            document: orderAddedSubscription,
+            updateQuery: (prev, {subscriptionData}) =>{
+                if(!subscriptionData.data){
+                    return prev;
+                }
+                const newOrder = subscriptionData.data.orderAdded;
+                if (!prev.getOrders.find(t => t._id === newOrder._id)) {
+                    return {
+                        ...prev,
+                        getOrders:[{...newOrder}, ...prev.getOrders]
+                    }
+                }
+                return prev;
+            }
+        })
+    }
     componentDidMount(){
         this._getMe();
     }

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
-import eoLocale from 'date-fns/locale/en';
+import eoLocale from 'date-fns/locale/es';
 import { fakeavatar } from '../../utils/constants'
 
 
@@ -70,7 +70,7 @@ function OrderCardHeader({username, firstname, lastname, avatar, createdAt}){
                 </MetaTopContainer>
                 <MetaBottomContainer>
                     <MetaText>
-                        {distanceInWordsToNow(createdAt, {locale: eoLocale})} ago
+                    hace {distanceInWordsToNow(createdAt, {locale: eoLocale})}
                     </MetaText>
                 </MetaBottomContainer>
             </MetaContainer>

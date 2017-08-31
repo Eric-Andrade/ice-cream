@@ -15,11 +15,14 @@ export default {
         getClientOrders: OrdersResolver.getClientOrders,
         me: ClientsResolver.me
     },
-    Mutation:{
+    Mutation: {
         createOrder: OrdersResolver.createOrder,
         updateOrder: OrdersResolver.updateOrder,
         deleteOrder: OrdersResolver.deleteOrder,
         signupClient: ClientsResolver.signupClient,
         loginClient: ClientsResolver.loginClient,
+    },
+    Subscription: {
+        orderAdded: OrdersResolver.orderAdded,
     }
 }

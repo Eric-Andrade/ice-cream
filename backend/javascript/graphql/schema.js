@@ -55,8 +55,13 @@ export default `
         loginClient(email: String!, password: String!): Auth
     }
 
+    type Subscription {
+        orderAdded: Order
+    }
+
     schema {
         query: Query
         mutation: Mutation
+        subscription: Subscription
     }
 `

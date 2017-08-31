@@ -1,5 +1,8 @@
 import Order from '../../models/orders'
 import { requireAuth } from '../../services/auth'
+import { pubsub } from '../../config/pubsub';
+
+const ORDERADDED = 'orderAdded';
 
 export default {
     getOrder: async(_, { _id }, {client}) =>{
@@ -29,7 +32,9 @@ export default {
     createOrder: async (_, args, {client}) => {
         try{
             await requireAuth(client)
-            return Order.create({...args,  client: client._id})
+            const order = await Order.create({...args,  client: client._id});
+            pubsub.publish(ORDERADDED, {[ORDERADDED]: order});
+            return order;
         }catch(error){
             throw error;
         }
@@ -63,5 +68,8 @@ export default {
         }catch(error){
             throw error;
         }
+    },
+    orderAdded: {
+        subscribe: () => pubsub.asyncIterator(ORDERADDED)
     }
 }
