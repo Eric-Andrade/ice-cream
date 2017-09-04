@@ -15,15 +15,15 @@ import resolvers from './graphql/resolvers/index'
 const app = express();
 middleware(app);
 app
-.use('/graphiql', graphiqlExpress({
-  endpointURL: '/graphql',
-  subscriptionsEndpoint: `ws://localhost:${constants.port}${constants.subscriptionPath}`
-}))
-.use('/graphql', graphqlExpress(req =>({
-  schema,
-  context:{client: req.client}
-})
-));
+  .use('/graphiql', graphiqlExpress({
+    endpointURL: '/graphql',
+    subscriptionsEndpoint: `ws://localhost:${constants.port}${constants.subscriptionPath}`
+  }))
+  .use('/graphql', graphqlExpress(req =>({
+    schema,
+    context:{client: req.client}
+  })
+  ));
 
 const schema = makeExecutableSchema({
   typeDefs,
@@ -44,7 +44,7 @@ const graphqlServer = createServer(app)
         server: graphqlServer,
         path: constants.subscriptionPath
       })
-      console.log(`APIGraphQL running on http://localhost:${constants.port}/graphiql`);
+      console.log(`APIGraphQL running on http://localhost:${constants.port}/graphql`);
     }
   });
 // })

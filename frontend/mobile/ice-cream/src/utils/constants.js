@@ -9,6 +9,7 @@ export const colors = {
   WHITE: '#FFFFFF',
   LIGHT_GRAY: '#CAD0D6',
   LIGHT_GRAY100: '#F5F5F5',
+  LIGHT_GRAY100RGBA: 'rgba(245, 245, 245, 0.1)',
   LIGHT_GRAY200: '#9C9C9C',
   GRAY: '#333333',
   BROWN: '#795548',

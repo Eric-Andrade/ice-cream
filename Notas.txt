@@ -1,6 +1,6 @@
 Run services
   run APIGraphQL: backend -> javascript: yarn start
-  run App: frontend -> mobile -> ice-cream: exp start
+  run App: frontend -> mobile: exp start
     run emulator ios/android: frontend -> mobile -> ice-cream: exp ios/android
     run rnDebugger: yarn debug
    

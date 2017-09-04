@@ -31,6 +31,7 @@ const Wrapper = styled.View`
     alignSelf: stretch;
     alignItems: center;
     justifyContent: center;
+    backgroundColor: ${props => props.theme.LIGHT_GRAY100RGBA};
 `;
 const BackButton = styled(Touchable).attrs({
     feedback: 'opacity',
@@ -134,40 +135,42 @@ class SignupForm extends Component {
                 <Entypo color={colors.LIGHT_GRAY200} size={27} name="chevron-thin-left" />
               </BackButton>
               <BackImage style={{width: null, height: null}}
-                    source={require('../../assets/background.png')}>   
+                    source={require('../../assets/background1.png')}>   
                 <Wrapper>
                     <InputWrapper>
                         <Input 
                         placeholder="Full Name"
                         returnKeyType={"next"}
-                        underlineColorAndroid={colors.PRIMARY}
                         autoCapitalize="words"
                         onChangeText={text => this._onChangeText(text, 'fullName')}
+                        underlineColorAndroid="transparent"
+                        onSubmitEditing={() => this.emailInput.focus()}
                         />
                     </InputWrapper>
                     <InputWrapper>
                         <Input 
                         placeholder="Email"
-                        underlineColorAndroid={colors.PRIMARY}
                         keyboardType="email-address"
                         autoCapitalize="none"
                         onChangeText={text => this._onChangeText(text, 'email')}
+                        underlineColorAndroid="transparent"
+                        ref={(input) => {this.emailInput = input }}
                         />
                     </InputWrapper>
                     <InputWrapper>
                         <Input 
                         placeholder="Username"
-                        underlineColorAndroid={colors.PRIMARY}
                         autoCapitalize="none"
                         onChangeText={text => this._onChangeText(text, 'username')}
+                        underlineColorAndroid="transparent"
                         />
                     </InputWrapper>
                     <InputWrapper>
                         <Input
                         placeholder="Password"
-                        underlineColorAndroid={colors.PRIMARY}
                         secureTextEntry
                         onChangeText={text => this._onChangeText(text, 'password')}
+                        underlineColorAndroid="transparent"
                         />
                     </InputWrapper>
                     <ButtonConfirm onPress={this._onSignupPress} disabled={this._checkIfDisabled()}>

@@ -7,13 +7,15 @@ import SignupForm from '../components/SignupForm';
 import {colors} from '../utils/constants'
 
 const login = 'Log in'
-const signup = 'Don´t have an account yet? Sign up';
+const dontaccount = "Don't have an account? ";
 const slogan = '❝Change the World, One Scoop at a time...❞';
 const NameCompany = 'iceCream Unicorn';
-const icecreamLogoSize = 120;
+const icecreamLogoSize = 110;
 const avatarRadius = icecreamLogoSize / 2;
 
-const Root = styled.View`
+const Root = styled(Touchable).attrs({
+    feedback: 'none'
+})`
     flex: 1;
     position: relative; 
     justifyContent: center;
@@ -29,6 +31,7 @@ const InfoContainer = styled.View`
     top: 10%;
     alignSelf: stretch;
     alignItems: center;
+    backgroundColor: ${props => props.theme.LIGHT_GRAY100RGBA};
 `;
 const CompanyName = styled.Text`
     color: ${props => props.theme.LIGHT_GRAY200};
@@ -36,8 +39,13 @@ const CompanyName = styled.Text`
     marginBottom: 5
 `
 const Logo = styled.Image`
-    height: ${icecreamLogoSize};
-    width: ${icecreamLogoSize};
+    
+`;
+const LogoContainer = styled.View`
+    justifyContent: center;
+    alignItems: center;
+    height: 110;
+    width: 110;
     borderRadius: ${avatarRadius};
     backgroundColor: ${props => props.theme.WHITE};
 `;
@@ -50,11 +58,15 @@ const Slogan = styled.Text`
     fontWeight: 600;
     marginTop: 15
 `;
-const BottomContainer = styled.View`
-   marginTop: 30;
-   width: 100%;
-   justifyContent: center;
-   alignItems: center;
+const BottomContainer = styled.KeyboardAvoidingView.attrs({
+    behavior: 'padding'
+})`
+    flex: 1;
+    position: relative; 
+    justifyContent: center;
+    marginBottom: 70;
+    width: 100%;
+    alignItems: center;
 `;
 const ButtonLogin = styled(Touchable).attrs({
     feedback: 'opacity',
@@ -82,7 +94,8 @@ const ButtonLoginText = styled.Text`
     fontSize: 16;
 `;
 const ButtonSignup = styled(Touchable).attrs({
-    feedback: 'opacity'
+    feedback: 'opacity',
+    hitSlot: {top: 15, bottom: 15, right: 15, left: 15}
 })`
     marginTop: 10;
     borderRadius: 10;
@@ -90,17 +103,21 @@ const ButtonSignup = styled(Touchable).attrs({
     alignItems: center;
     zIndex: 1;
 `;
-const ButtonSignupText = styled.Text`
-    color: ${props => props.theme.LIGHT_GRAY200};
-    fontWeight: 500;
+const ButtonSignupText1 = styled.Text`
+    color: #777777;
     fontSize: 15;
-    zIndex: 1;
+    zIndex: 100;
+`;
+const ButtonSignupText2 = styled.Text`
+    color: #ff2075;
+    fontSize: 15;
+    fontWeight: 500;
 `;
 const InputWrapper = styled.View`
     height: 45;
     width: 70%;
     borderBottomWidth: 1;
-    borderBottomColor: ${props => props.theme.LIGHT_GRAY200};;
+    borderBottomColor: ${props => props.theme.LIGHT_GRAY200};
     justifyContent: flex-end;
 `;
 const Input = styled.TextInput.attrs({
@@ -123,7 +140,9 @@ class AuthenticationScreen extends Component {
     state = {
         initialState,
         fontLoaded: false,
-    };;
+        email: '',
+        password: ''
+    };
     
     async componentDidMount() {
         await Font.loadAsync({
@@ -139,6 +158,13 @@ class AuthenticationScreen extends Component {
     _onShowSignupPress = () => this.setState({ showSignup: true });
     _onBackPress = () => this.setState({ ...initialState });
     _onChangeText = (text, type) => this.setState({[type]:text});
+    _checkIfDisabled(){
+        const { email, password } = this.state;
+        if(!email || !password ){
+            return true
+        }
+        return false
+    }
     render() {
         if (this.state.showSignup) {
             return(
@@ -149,47 +175,66 @@ class AuthenticationScreen extends Component {
         }
         return (
             <Root onPress={this._onOutSidePress}>
-                <BackImage style={{width: null, height: null}}
-                    source={require('../../assets/background.png')}>   
-                    <InfoContainer>
-                        {
-                        this.state.fontLoaded ? (
-                        <CompanyName style={{fontFamily: 'Sacramento', fontSize: 37}}>
-                            {NameCompany}
-                        </CompanyName>
-                        ) : null
-                        }
-                        <Logo source={require('../../assets/icons/app-icon.png')}/>
-                        <Slogan style={{letterSpacing: 1}}>
-                            {slogan}
-                        </Slogan>
-                        <BottomContainer>
-                            <InputWrapper>
-                                <Input 
-                                placeholder="Email or phone"                                
-                                underlineColorAndroid={colors.PRIMARY}
-                                keyboardType="email-address"
-                                autoCapitalize="none"
-                                onChangeText={text => this._onChangeText(text, 'email')}
-                                />
-                            </InputWrapper>
-                            <InputWrapper>
-                                <Input
-                                placeholder="Password"                                
-                                underlineColorAndroid={colors.PRIMARY}
-                                secureTextEntry
-                                onChangeText={text => this._onChangeText(text, 'password')}
-                                />
-                            </InputWrapper>
-                            <ButtonLogin>
-                                <ButtonLoginText>{login}</ButtonLoginText>
-                            </ButtonLogin>
-                            <ButtonSignup onPress={this._onShowSignupPress}>
-                                <ButtonSignupText>{signup}</ButtonSignupText>
-                            </ButtonSignup>
-                        </BottomContainer>     
-                    </InfoContainer>
-                </BackImage>
+                    <BackImage style={{width: null, height: null}}
+                        source={require('../../assets/background1.png')}>
+                        <InfoContainer>
+                            {
+                            this.state.fontLoaded ? (
+                            <CompanyName style={{fontFamily: 'Sacramento', fontSize: 37}}>
+                                {NameCompany}
+                            </CompanyName>
+                            ) : null
+                            }
+                            <LogoContainer>
+                                <Logo 
+                                style={{
+                                    height: Platform.OS === 'ios' ? icecreamLogoSize : 90,
+                                    width: Platform.OS === 'ios' ? icecreamLogoSize : 90,}}
+                                source={require('../../assets/icons/app-icon.png')}/>
+                            </LogoContainer>    
+                            <Slogan style={{letterSpacing: Platform.OS === 'ios' ? 1 : 2}}>
+                                {slogan}
+                            </Slogan>
+                            <BottomContainer>
+                                <InputWrapper>
+                                    <Input 
+                                    placeholder="Email or phone"
+                                    keyboardType="email-address"
+                                    autoCorrect={false}
+                                    autoCapitalize="none"
+                                    onChangeText={text => this._onChangeText(text, 'email')}
+                                    underlineColorAndroid="transparent"        
+                                    returnKeyType={"next"}
+                                    onSubmitEditing={() => this.passwordInput.focus()}
+                                    />
+                                </InputWrapper>
+                                <InputWrapper>
+                                    <Input
+                                    placeholder="Password"
+                                    secureTextEntry
+                                    onChangeText={text => this._onChangeText(text, 'password')}
+                                    underlineColorAndroid="transparent"
+                                    autoCorrect={false}
+                                    autoCapitalize="none"
+                                    ref={(input)=> {this.passwordInput = input}}
+                                    />
+                                </InputWrapper>
+                                <ButtonLogin disabled={this._checkIfDisabled()}>
+                                    <ButtonLoginText>{login}</ButtonLoginText>
+                                </ButtonLogin>
+                                <ButtonSignup onPress={this._onShowSignupPress}>
+                                    <ButtonSignupText1 style={{
+                                        fontWeight: Platform.OS === 'ios' ? '500' : '300',}}>
+                                        {dontaccount}
+                                    <ButtonSignupText2 style={{
+                                        fontWeight: Platform.OS === 'ios' ? '600' : '400',}}>
+                                            Sign up
+                                    </ButtonSignupText2>
+                                    </ButtonSignupText1>
+                                </ButtonSignup>
+                            </BottomContainer>     
+                        </InfoContainer>
+                    </BackImage>
             </Root>
         );
     }
