@@ -60,7 +60,7 @@ class OrdersScreen extends Component{
                         alignSelf: 'stretch'
                     }}
                     data={data.getOrders}
-                    keyExtractor={item => item._id}
+                    keyExtractor={item => item._id.toString()}
                     renderItem={this._renderItem}
                 />
             </Root>

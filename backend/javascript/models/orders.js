@@ -3,8 +3,8 @@ import mongoose, {Schema} from 'mongoose';
 const OrderSchema = new Schema({
     text:{
         type: String,
-        minlength:[5,'Text must to be longer'],
-        maxlength:[150,'Text too long']
+        minlength:[5,'Text must be longer'],
+        maxlength:[150,'Text is very longer']
     },
     client: {
         type: Schema.Types.ObjectId,
